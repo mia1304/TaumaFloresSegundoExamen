@@ -1,0 +1,55 @@
+@startuml
+class animal {
+    + id_animal: int (PK)
+    + nombre: string
+    + edad: int
+}
+class especie {
+    +id_especie: int (PK)
+    +tipo_especie: string
+
+}
+class recinto {
+    +id_recinto: int (PK)
+    +nombre: string
+    +tipo_recinto: string
+}
+class cuidadores {
+    +id_cuidadores: int (PK)
+    +nombres: string
+    +apellidos: string
+    +especialidad: string
+}
+class actividades {
+    +id_actividades: int (PK)
+    +dia: date
+    +hora: datetime
+}
+class animal_especie{
+    + id_animal: int (PK, FK)
+    +id_especie: int (PK, FK)
+}
+class animal_recinto{
+    + id_animal: int (PK, FK)
+    +id_recinto: int (PK, FK)
+}
+class cuidador_especie{
+    +id_especie: int (PK, FK)
+    +id_cuidador: int (PK, FK)
+}
+class animal_actividades{
+    + id_animal: int (PK, FK)
+    + id_actividad: int (PK, FK)
+}
+
+animal "1..*" -- "*" cuidadores : cuidado_por
+animal_especie "*" --"1" animal:pertenece_a
+animal_especie "*" --"1" especie
+animal_recinto "*" --"1" animal: alojado_en
+animal_recinto "*" --"1" recinto:  contiene
+animal_actividades "*" --"1" animal: participa_en 
+animal_actividades "*" --"1" actividades: asociada_a 
+cuidador_especie "*" --"1" cuidadores: especializado_en
+cuidador_especie "*" --"1" especie: cuida 
+
+@enduml
